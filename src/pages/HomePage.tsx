@@ -20,11 +20,6 @@ const HomePage: React.FC = () => {
   return (
     <div className="home-page">
       <header className="header">
-        <div className="hanyang-banner">
-          <div className="logo-container">
-            <div className="hanyang-logo"></div>
-          </div>
-        </div>
         <div className="container">
           <h1 className={isVisible ? 'visible' : ''}>한양대학교 창업대학원</h1>
           <p className={isVisible ? 'visible' : ''}>2025학년도 실전 창업 역량 개발 프로그램</p>
