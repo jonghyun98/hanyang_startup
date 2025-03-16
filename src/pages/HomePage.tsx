@@ -14,9 +14,14 @@ const HomePage: React.FC = () => {
   return (
     <div className="home-page">
       <header className="header">
+        <div className="hanyang-banner">
+          <div className="logo-container">
+            <div className="hanyang-logo"></div>
+          </div>
+        </div>
         <div className="container">
-          <h1 className={isVisible ? 'visible' : ''}>한양대학교 창업 강의</h1>
-          <p className={isVisible ? 'visible' : ''}>실전 창업 역량 개발을 위한 주차별 강의 자료</p>
+          <h1 className={isVisible ? 'visible' : ''}>한양대학교 창업대학원</h1>
+          <p className={isVisible ? 'visible' : ''}>2025학년도 실전 창업 역량 개발 프로그램</p>
           <div className="header-buttons">
             <a href="#lectures" className="primary-button">강의 둘러보기</a>
             <a href="https://hanyang.ac.kr" target="_blank" rel="noopener noreferrer" className="secondary-button">한양대학교</a>
@@ -34,17 +39,17 @@ const HomePage: React.FC = () => {
           <div className="highlights-grid">
             <div className="highlight-card">
               <div className="highlight-icon">📚</div>
-              <h3>체계적인 강의</h3>
+              <h3>체계적인 커리큘럼</h3>
               <p>창업 전문가들이 설계한 총 16주 강의 커리큘럼</p>
             </div>
             <div className="highlight-card">
               <div className="highlight-icon">💡</div>
-              <h3>실무 중심</h3>
+              <h3>실무 중심 교육</h3>
               <p>실제 창업 현장의 경험과 노하우 공유</p>
             </div>
             <div className="highlight-card">
               <div className="highlight-icon">🚀</div>
-              <h3>실전 역량</h3>
+              <h3>창업 역량 강화</h3>
               <p>이론과 실무를 아우르는 종합적 역량 개발</p>
             </div>
           </div>

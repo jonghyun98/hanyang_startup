@@ -1,93 +1,101 @@
-import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useParams, Link } from 'react-router-dom';
 import { getLectureById } from '../data/lectureUtils';
 import ClassCard from '../components/ClassCard';
 import '../styles/LectureDetailPage.css';
 
 const LectureDetailPage: React.FC = () => {
   const { weekId } = useParams<{ weekId: string }>();
-  const weekNumber = parseInt(weekId || '1');
-  const navigate = useNavigate();
+  const [activeTab, setActiveTab] = useState<'overview' | 'classes'>('overview');
   
-  const lecture = getLectureById(weekNumber);
+  const lectureId = weekId ? parseInt(weekId) : 0;
+  const lecture = getLectureById(lectureId);
   
   if (!lecture) {
-    return (
-      <div className="lecture-detail-page">
-        <div className="not-found">
-          <h2>강의를 찾을 수 없습니다</h2>
-          <Link to="/" className="back-link">홈으로 돌아가기</Link>
-        </div>
-      </div>
-    );
+    return <div className="error-message">해당 주차 강의를 찾을 수 없습니다.</div>;
   }
 
-  // 이전 주차와 다음 주차로 이동하는 함수
-  const navigateToPreviousWeek = () => {
-    if (weekNumber > 1) {
-      navigate(`/lectures/${weekNumber - 1}`);
-    }
-  };
-
-  const navigateToNextWeek = () => {
-    if (weekNumber < 16) {
-      navigate(`/lectures/${weekNumber + 1}`);
-    }
-  };
-
+  // 다음 주차와 이전 주차 ID 계산 (1~16주차 범위 내에서만)
+  const prevWeekId = lecture.week > 1 ? lecture.id - 1 : null;
+  const nextWeekId = lecture.week < 16 ? lecture.id + 1 : null;
+  
   return (
     <div className="lecture-detail-page">
       <div className="back-navigation">
-        <Link to="/" className="back-link">← 목록으로 돌아가기</Link>
+        <Link to="/" className="back-link">
+          <span>← 전체 강의 목록으로 돌아가기</span>
+        </Link>
       </div>
-      <div className="lecture-detail-content">
-        <header className="lecture-detail-header">
-          <div className="lecture-detail-week">
-            <span className="week-label">{lecture.week}주차</span>
-          </div>
-          <h1 className="lecture-detail-title">{lecture.title}</h1>
-          <div className="lecture-detail-date">{lecture.date}</div>
-        </header>
-        <div className="lecture-detail-body">
-          {lecture.summary ? (
-            <div className="lecture-summary">
-              <h3>주차 요약</h3>
-              <p>{lecture.summary}</p>
+      
+      <div className="lecture-header">
+        <div className="lecture-title-section">
+          <span className="lecture-week">{lecture.week}주차</span>
+          <h1 className="lecture-title">{lecture.title}</h1>
+          <span className="lecture-date">{lecture.date}</span>
+        </div>
+        
+        <div className="week-navigation">
+          {prevWeekId && (
+            <Link to={`/lectures/${prevWeekId}`} className="week-nav-link prev-week">
+              ← {prevWeekId}주차
+            </Link>
+          )}
+          
+          {nextWeekId && (
+            <Link to={`/lectures/${nextWeekId}`} className="week-nav-link next-week">
+              {nextWeekId}주차 →
+            </Link>
+          )}
+        </div>
+      </div>
+      
+      <div className="lecture-tabs">
+        <button 
+          className={`tab-button ${activeTab === 'overview' ? 'active' : ''}`}
+          onClick={() => setActiveTab('overview')}
+        >
+          주차 개요
+        </button>
+        <button 
+          className={`tab-button ${activeTab === 'classes' ? 'active' : ''}`}
+          onClick={() => setActiveTab('classes')}
+        >
+          교시별 내용 ({lecture.classes.length})
+        </button>
+      </div>
+      
+      <div className="lecture-content">
+        {activeTab === 'overview' && (
+          <div className="overview-content">
+            <p className="overview-text">{lecture.content}</p>
+            <div className="class-overview">
+              <h2>이번 주차 교시 구성</h2>
+              <ul className="class-list">
+                {lecture.classes.map(classItem => (
+                  <li key={classItem.id} className="class-item">
+                    <span className="class-number">{classItem.period}교시</span>
+                    <span className="class-title">{classItem.title}</span>
+                    <span className="professor-name">{classItem.professor} 교수</span>
+                  </li>
+                ))}
+              </ul>
             </div>
-          ) : null}
-          <div className="lecture-content">
-            <p>{lecture.content}</p>
           </div>
-        </div>
+        )}
         
-        <h2 className="classes-title">세부 수업 내용</h2>
-        <div className="classes-grid">
-          {lecture.classes.map(classItem => (
-            <Link 
-              to={`/lectures/${weekNumber}/classes/${classItem.id}`} 
-              key={classItem.id}
-              className="class-card-link"
-            >
-              <ClassCard 
-                classItem={classItem} 
-                weekNumber={weekNumber} 
-              />
-            </Link>
-          ))}
-        </div>
-        
-        <div className="lecture-navigation">
-          {weekNumber > 1 && (
-            <Link to={`/lectures/${weekNumber - 1}`} className="nav-link prev">
-              ← {weekNumber - 1}주차
-            </Link>
-          )}
-          {weekNumber < 16 && (
-            <Link to={`/lectures/${weekNumber + 1}`} className="nav-link next">
-              {weekNumber + 1}주차 →
-            </Link>
-          )}
-        </div>
+        {activeTab === 'classes' && (
+          <div className="classes-grid">
+            {lecture.classes.map(classItem => (
+              <Link 
+                to={`/lectures/${lecture.id}/classes/${classItem.id}`} 
+                key={classItem.id} 
+                className="class-card-link"
+              >
+                <ClassCard classItem={classItem} />
+              </Link>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

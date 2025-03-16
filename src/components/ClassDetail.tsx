@@ -1,32 +1,25 @@
 import React from 'react';
-import { useParams, Link, useNavigate } from 'react-router-dom';
-import { getLectureById, getClassById } from '../data/lectureUtils';
-import '../styles/ClassDetailPage.css';
+import { useParams, Link } from 'react-router-dom';
+import { getClassById, getLectureById } from '../data/lectureUtils';
 import LectureContentRenderer from './LectureContentRenderer';
-import { LectureClass } from '../data/types';
+import '../styles/ClassDetailPage.css';
 
 const ClassDetail: React.FC = () => {
   const { lectureId, classId } = useParams<{ lectureId: string; classId: string }>();
-  const navigate = useNavigate();
   
-  const lecture = getLectureById(Number(lectureId));
-  const classItem = getClassById(lecture?.id, Number(classId));
+  // 강의와 교시 데이터 가져오기
+  const lectureIdNum = lectureId ? parseInt(lectureId) : 0;
+  const classIdNum = classId ? parseInt(classId) : 0;
+  
+  const lecture = getLectureById(lectureIdNum);
+  const classItem = getClassById(lectureIdNum, classIdNum);
   
   if (!lecture || !classItem) {
-    return (
-      <div className="class-detail-page">
-        <div className="not-found">
-          <h2>강의를 찾을 수 없습니다</h2>
-          <Link to="/" className="button">홈으로 돌아가기</Link>
-        </div>
-      </div>
-    );
+    return <div className="error-message">해당 강의를 찾을 수 없습니다.</div>;
   }
   
-  // 현재 클래스의 인덱스 찾기
-  const currentIndex = lecture.classes.findIndex((c: LectureClass) => c.id === classItem.id);
-  
-  // 이전 클래스와 다음 클래스 결정
+  // 이전/다음 교시 찾기
+  const currentIndex = lecture.classes.findIndex(c => c.id === classIdNum);
   const prevClass = currentIndex > 0 ? lecture.classes[currentIndex - 1] : null;
   const nextClass = currentIndex < lecture.classes.length - 1 ? lecture.classes[currentIndex + 1] : null;
   
@@ -49,20 +42,22 @@ const ClassDetail: React.FC = () => {
         
         <div className="class-navigation">
           {prevClass ? (
-            <Link 
-              to={`/lectures/${lecture.id}/classes/${prevClass.id}`} 
-              className="nav-link prev"
-            >
-              ← 이전 교시
+            <Link to={`/lectures/${lecture.id}/classes/${prevClass.id}`} className="nav-link prev-link">
+              <span className="nav-icon">←</span>
+              <div className="nav-content">
+                <span className="nav-label">이전 교시</span>
+                <span className="nav-title">{prevClass.period}교시: {prevClass.title}</span>
+              </div>
             </Link>
           ) : <div></div>}
           
           {nextClass ? (
-            <Link 
-              to={`/lectures/${lecture.id}/classes/${nextClass.id}`} 
-              className="nav-link next"
-            >
-              다음 교시 →
+            <Link to={`/lectures/${lecture.id}/classes/${nextClass.id}`} className="nav-link next-link">
+              <div className="nav-content">
+                <span className="nav-label">다음 교시</span>
+                <span className="nav-title">{nextClass.period}교시: {nextClass.title}</span>
+              </div>
+              <span className="nav-icon">→</span>
             </Link>
           ) : <div></div>}
         </div>

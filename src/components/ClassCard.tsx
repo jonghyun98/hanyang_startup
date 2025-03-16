@@ -4,21 +4,27 @@ import '../styles/ClassCard.css';
 
 interface ClassCardProps {
   classItem: LectureClass;
-  weekNumber: number;
+  weekNumber?: number;
 }
 
-const ClassCard: React.FC<ClassCardProps> = ({ classItem, weekNumber }) => {
-  const severityClass = `severity-${classItem.severity || 'normal'}`;
-  
+const ClassCard: React.FC<ClassCardProps> = ({ classItem }) => {
   return (
-    <div className={`class-card ${severityClass}`}>
-      <div className="class-period">{classItem.period}교시</div>
-      <h3 className="class-title">{classItem.title}</h3>
-      <div className="class-professor">{classItem.professor} 교수님</div>
-      <div className="class-content">
-        <p>{classItem.content.substring(0, 150)}{classItem.content.length > 150 ? '...' : ''}</p>
+    <div className={`class-card severity-${classItem.severity}`}>
+      <div className="class-card-header">
+        <div className="class-number">{classItem.period}교시</div>
+        <div className="professor-info">
+          <span className="professor-icon"></span>
+          <span className="professor-name">{classItem.professor} 교수</span>
+        </div>
       </div>
-      <div className="class-card-hint">자세히 보기</div>
+      <div className="class-card-content">
+        <h3 className="class-title">{classItem.title}</h3>
+        <p className="class-summary">
+          {classItem.content.length > 100
+            ? `${classItem.content.substring(0, 100)}...`
+            : classItem.content}
+        </p>
+      </div>
     </div>
   );
 };
