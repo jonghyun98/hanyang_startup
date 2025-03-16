@@ -1,3 +1,34 @@
+# 한양대학교 창업 강의 웹사이트
+
+한양대학교 창업 강의 정보를 제공하는 웹사이트입니다. 주차별 강의 내용과 교시별 상세 정보를 확인할 수 있습니다.
+
+**배포 링크:** [한양대학교 창업 강의 웹사이트 바로가기](https://jonghyun98.github.io/hanyang_startup/)
+
+## 기술 스택
+
+- React
+- TypeScript
+- Vite
+- React Router
+
+## 개발 환경 설정
+
+```bash
+# 패키지 설치
+npm install
+
+# 개발 서버 실행
+npm run dev
+
+# 빌드
+npm run build
+
+# GitHub Pages 배포
+npm run deploy
+```
+
+---
+
 # React + TypeScript + Vite
 
 This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
