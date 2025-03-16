@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import { Link } from 'react-router-dom';
 import { getAllLectures } from '../data/lectureUtils';
 import '../styles/HomePage.css';
@@ -6,10 +6,16 @@ import '../styles/HomePage.css';
 const HomePage: React.FC = () => {
   const lectures = getAllLectures();
   const [isVisible, setIsVisible] = useState(false);
+  const lecturesRef = useRef<HTMLElement>(null);
   
   useEffect(() => {
     setIsVisible(true);
   }, []);
+
+  const scrollToLectures = (e: React.MouseEvent<HTMLAnchorElement>) => {
+    e.preventDefault();
+    lecturesRef.current?.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <div className="home-page">
@@ -23,7 +29,7 @@ const HomePage: React.FC = () => {
           <h1 className={isVisible ? 'visible' : ''}>한양대학교 창업대학원</h1>
           <p className={isVisible ? 'visible' : ''}>2025학년도 실전 창업 역량 개발 프로그램</p>
           <div className="header-buttons">
-            <a href="#lectures" className="primary-button">강의 둘러보기</a>
+            <a href="#lectures" className="primary-button" onClick={scrollToLectures}>강의 둘러보기</a>
             <a href="https://hanyang.ac.kr" target="_blank" rel="noopener noreferrer" className="secondary-button">한양대학교</a>
           </div>
         </div>
@@ -56,7 +62,7 @@ const HomePage: React.FC = () => {
         </div>
       </section>
       
-      <main className="main-content" id="lectures">
+      <main className="main-content" id="lectures" ref={lecturesRef}>
         <div className="container">
           <div className="section-header">
             <h2 className="section-title">강의 목록</h2>
@@ -108,7 +114,7 @@ const HomePage: React.FC = () => {
           <div className="footer-content">
             <div className="footer-info">
               <img src="/logo-white.png" alt="한양대학교 로고" className="footer-logo" />
-              <p>한양대학교 창업 교육팀</p>
+              <p>한양대학교 창업대학원</p>
             </div>
             <div className="footer-links">
               <a href="https://hanyang.ac.kr" target="_blank" rel="noopener noreferrer">대학 홈페이지</a>
@@ -117,7 +123,7 @@ const HomePage: React.FC = () => {
             </div>
           </div>
           <div className="footer-bottom">
-            <p>&copy; 2023 한양대학교 창업 교육팀. All rights reserved.</p>
+            <p>&copy; 2025 한양대학교 창업대학원. All rights reserved.</p>
           </div>
         </div>
       </footer>
