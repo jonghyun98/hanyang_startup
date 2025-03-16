@@ -4,8 +4,8 @@
   --border-radius: 8px;
   --card-radius: 12px;
   --badge-radius: 50px;
-  --transition-fast: all 0.3s ease;
-  --transition-normal: all 0.4s ease;
+  --transition-fast: all 0.2s ease;
+  --transition-normal: all 0.3s ease;
   --card-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   --hover-shadow: 0 8px 30px rgba(0, 0, 0, 0.12);
 }
@@ -15,27 +15,19 @@
   width: 100%;
   min-height: calc(100vh - 60px);
   background-color: #f5f7fa;
-  animation: fadeIn 0.5s ease;
 }
 
 /* 헤더 배너 */
 .lecture-header-banner {
-  background-color: var(--primary-color);
-  color: white;
-  padding: 3rem 0 4rem;
+  background-color: #f5f7fa;
+  color: #333;
+  padding: 1.5rem 0;
   position: relative;
-  overflow: hidden;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
 }
 
 .lecture-header-banner::before {
-  content: '';
-  position: absolute;
-  top: 0;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  background: linear-gradient(135deg, rgba(14, 65, 148, 0.95) 0%, rgba(4, 45, 110, 0.98) 100%);
-  z-index: 1;
+  display: none;
 }
 
 .lecture-header-content {
@@ -43,14 +35,11 @@
   margin: 0 auto;
   padding: 0 2rem;
   position: relative;
-  z-index: 2;
 }
 
 /* 뒤로가기 버튼 */
 .back-navigation {
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeIn 0.4s ease 0.1s forwards;
+  margin-bottom: 1rem;
 }
 
 .back-link {
@@ -58,22 +47,21 @@
   align-items: center;
   gap: 0.5rem;
   padding: 0.6rem 1.2rem;
-  color: white;
+  color: var(--primary-color);
   font-weight: 500;
   text-decoration: none;
   transition: var(--transition-fast);
   border-radius: var(--border-radius);
-  background-color: rgba(255, 255, 255, 0.15);
-  backdrop-filter: blur(5px);
+  background-color: rgba(14, 65, 148, 0.08);
 }
 
 .back-icon {
   font-size: 1.2rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .back-link:hover {
-  background-color: rgba(255, 255, 255, 0.25);
+  background-color: rgba(14, 65, 148, 0.15);
   transform: translateX(-5px);
 }
 
@@ -85,20 +73,18 @@
 .lecture-title-section {
   text-align: left;
   max-width: 850px;
-  opacity: 0;
-  animation: fadeIn 0.5s ease 0.2s forwards;
 }
 
 .lecture-badge-container {
   display: flex;
   gap: 1rem;
-  margin-bottom: 1rem;
+  margin-bottom: 0.5rem;
   flex-wrap: wrap;
 }
 
 .lecture-week-badge, .lecture-date-badge {
   display: inline-block;
-  padding: 0.5rem 1rem;
+  padding: 0.4rem 0.8rem;
   border-radius: var(--badge-radius);
   font-weight: 500;
   font-size: 0.9rem;
@@ -110,24 +96,22 @@
 }
 
 .lecture-date-badge {
-  background-color: rgba(255, 255, 255, 0.15);
-  color: white;
-  backdrop-filter: blur(5px);
+  background-color: rgba(0, 0, 0, 0.08);
+  color: #555;
 }
 
 .lecture-title {
-  font-size: 2.8rem;
+  font-size: 2.2rem;
   font-weight: 700;
   margin: 0;
   line-height: 1.3;
-  color: white;
-  text-shadow: 0 2px 10px rgba(0, 0, 0, 0.2);
+  color: #333;
 }
 
 /* 메인 컨테이너 */
 .lecture-container {
   max-width: 1100px;
-  margin: -2rem auto 4rem;
+  margin: 1rem auto 4rem;
   padding: 0 2rem;
   position: relative;
 }
@@ -136,16 +120,14 @@
 .lecture-navigation-buttons {
   display: flex;
   justify-content: space-between;
-  margin-bottom: 2rem;
-  opacity: 0;
-  animation: fadeIn 0.5s ease 0.3s forwards;
+  margin-bottom: 1.5rem;
 }
 
 .navigation-button {
   display: flex;
   align-items: center;
   gap: 0.5rem;
-  padding: 0.8rem 1.5rem;
+  padding: 0.7rem 1.2rem;
   border-radius: var(--border-radius);
   background-color: white;
   color: var(--primary-color);
@@ -159,21 +141,21 @@
 .navigation-button:hover {
   background-color: var(--primary-color);
   color: white;
-  transform: translateY(-3px);
+  transform: translateY(-2px);
   box-shadow: var(--hover-shadow);
 }
 
 .prev-button {
-  padding-left: 1.2rem;
+  padding-left: 1rem;
 }
 
 .next-button {
-  padding-right: 1.2rem;
+  padding-right: 1rem;
 }
 
 .nav-icon {
   font-size: 1.2rem;
-  transition: transform 0.3s ease;
+  transition: transform 0.2s ease;
 }
 
 .prev-button:hover .nav-icon {
@@ -192,15 +174,13 @@
   box-shadow: 0 -4px 10px rgba(0, 0, 0, 0.03);
   overflow: hidden;
   margin-bottom: 0;
-  opacity: 0;
-  animation: fadeIn 0.5s ease 0.4s forwards;
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-bottom: none;
 }
 
 .tab-button {
   flex: 1;
-  padding: 1.5rem 2rem;
+  padding: 1.2rem 1.5rem;
   border: none;
   background-color: transparent;
   font-size: 1.1rem;
@@ -265,8 +245,6 @@
   border-radius: 0 0 var(--card-radius) var(--card-radius);
   box-shadow: var(--card-shadow);
   padding: 2.5rem;
-  opacity: 0;
-  animation: fadeIn 0.5s ease 0.5s forwards;
   border: 1px solid rgba(0, 0, 0, 0.05);
   border-top: none;
 }
@@ -410,18 +388,6 @@
   text-decoration: none;
 }
 
-/* 애니메이션 */
-@keyframes fadeIn {
-  0% {
-    opacity: 0;
-    transform: translateY(15px);
-  }
-  100% {
-    opacity: 1;
-    transform: translateY(0);
-  }
-}
-
 /* 반응형 스타일 */
 @media (max-width: 1100px) {
   .classes-grid {
@@ -431,11 +397,11 @@
 
 @media (max-width: 768px) {
   .lecture-header-banner {
-    padding: 2rem 0 3rem;
+    padding: 1.2rem 0;
   }
   
   .lecture-title {
-    font-size: 2rem;
+    font-size: 1.8rem;
   }
   
   .lecture-container {

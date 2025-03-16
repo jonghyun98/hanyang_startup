@@ -88,7 +88,7 @@ const LectureDetailPage: React.FC = () => {
                     <li key={classItem.id} className="class-item">
                       <div className="class-item-header">
                         <span className="class-number">{classItem.period}교시</span>
-                        <span className="severity-badge severity-${classItem.severity}">
+                        <span className={`severity-badge severity-${classItem.severity}`}>
                           {classItem.severity === 'high' ? '중요' : 
                            classItem.severity === 'normal' ? '일반' : '기본'}
                         </span>
