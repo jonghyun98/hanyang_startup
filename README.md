@@ -1,85 +1,79 @@
-# 한양대학교 창업 강의 웹사이트
+# 한양대학교 창업 강의
 
-한양대학교 창업 강의 정보를 제공하는 웹사이트입니다. 주차별 강의 내용과 교시별 상세 정보를 확인할 수 있습니다.
-
-**배포 링크:** [한양대학교 창업 강의 웹사이트 바로가기](https://jonghyun98.github.io/hanyang_startup/)
+Next.js 15, App Router, Supabase를 이용한 한양대학교 창업 강의 웹사이트입니다.
 
 ## 기술 스택
 
-- React
+- Next.js 15
 - TypeScript
-- Vite
-- React Router
+- Tailwind CSS
+- Supabase
 
-## 개발 환경 설정
+## 시작하기
+
+### 환경 설정
+
+1. `.env.local` 파일에 Supabase 정보를 입력합니다:
+
+```
+NEXT_PUBLIC_SUPABASE_URL=your-supabase-url
+NEXT_PUBLIC_SUPABASE_ANON_KEY=your-supabase-anon-key
+```
+
+### 데이터베이스 설정
+
+1. Supabase 프로젝트를 생성합니다.
+2. SQL 에디터에서 `scripts/schema.sql` 파일의 내용을 실행하여 테이블을 생성합니다.
+3. 더미 데이터를 데이터베이스에 넣기 위해 다음 명령어를 실행합니다:
 
 ```bash
-# 패키지 설치
 npm install
+npm run seed
+```
 
-# 개발 서버 실행
+### 개발 서버 실행
+
+```bash
 npm run dev
-
-# 빌드
-npm run build
-
-# GitHub Pages 배포
-npm run deploy
+# 또는
+yarn dev
+# 또는
+pnpm dev
 ```
 
----
+브라우저에서 [http://localhost:3000](http://localhost:3000)으로 접속하여 결과를 확인할 수 있습니다.
 
-# React + TypeScript + Vite
+## Supabase 데이터베이스 구조
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+### lectures 테이블
 
-Currently, two official plugins are available:
-
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react/README.md) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
-
-## Expanding the ESLint configuration
-
-If you are developing a production application, we recommend updating the configuration to enable type-aware lint rules:
-
-```js
-export default tseslint.config({
-  extends: [
-    // Remove ...tseslint.configs.recommended and replace with this
-    ...tseslint.configs.recommendedTypeChecked,
-    // Alternatively, use this for stricter rules
-    ...tseslint.configs.strictTypeChecked,
-    // Optionally, add this for stylistic rules
-    ...tseslint.configs.stylisticTypeChecked,
-  ],
-  languageOptions: {
-    // other options...
-    parserOptions: {
-      project: ['./tsconfig.node.json', './tsconfig.app.json'],
-      tsconfigRootDir: import.meta.dirname,
-    },
-  },
-})
+```sql
+CREATE TABLE lectures (
+  id SERIAL PRIMARY KEY,
+  week INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  date TEXT NOT NULL,
+  summary TEXT,
+  content TEXT NOT NULL
+);
 ```
 
-You can also install [eslint-plugin-react-x](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-x) and [eslint-plugin-react-dom](https://github.com/Rel1cx/eslint-react/tree/main/packages/plugins/eslint-plugin-react-dom) for React-specific lint rules:
+### classes 테이블
 
-```js
-// eslint.config.js
-import reactX from 'eslint-plugin-react-x'
-import reactDom from 'eslint-plugin-react-dom'
-
-export default tseslint.config({
-  plugins: {
-    // Add the react-x and react-dom plugins
-    'react-x': reactX,
-    'react-dom': reactDom,
-  },
-  rules: {
-    // other rules...
-    // Enable its recommended typescript rules
-    ...reactX.configs['recommended-typescript'].rules,
-    ...reactDom.configs.recommended.rules,
-  },
-})
+```sql
+CREATE TABLE classes (
+  id SERIAL PRIMARY KEY,
+  lecture_id INTEGER REFERENCES lectures(id),
+  period INTEGER NOT NULL,
+  title TEXT NOT NULL,
+  professor TEXT NOT NULL,
+  content TEXT NOT NULL,
+  severity TEXT NOT NULL CHECK (severity IN ('low', 'normal', 'high'))
+);
 ```
+
+## 배포
+
+Next.js 애플리케이션을 배포하는 가장 쉬운 방법은 [Vercel](https://vercel.com)을 이용하는 것입니다.
+
+자세한 내용은 [Next.js 배포 문서](https://nextjs.org/docs/deployment)를 참조하세요.
