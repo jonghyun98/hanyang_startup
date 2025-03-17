@@ -39,17 +39,18 @@ export default async function ClassDetailPage({
 	}
 
 	return (
-		<main className="fade-in">
-			<section className="bg-primary-light py-12">
-				<div className="container mx-auto px-4 max-w-4xl">
-					<div className="mb-4">
+		<main className="fade-in min-h-screen bg-gradient-to-b from-gray-50 to-gray-100">
+			<section className="bg-gradient-to-r from-blue-600 to-indigo-700 py-14 shadow-md relative overflow-hidden">
+				<div className="absolute inset-0 bg-grid-white/[0.05] bg-[length:16px_16px]"></div>
+				<div className="container mx-auto px-4 max-w-5xl relative z-10">
+					<div className="mb-6">
 						<Link
 							href={`/lectures/${weekId}`}
-							className="text-primary-color hover:underline mb-4 inline-flex items-center"
+							className="text-white hover:text-white/80 transition-colors duration-200 inline-flex items-center group"
 						>
 							<svg
 								xmlns="http://www.w3.org/2000/svg"
-								className="h-5 w-5 mr-1"
+								className="h-5 w-5 mr-2 transform group-hover:-translate-x-1 transition-transform duration-200"
 								viewBox="0 0 20 20"
 								fill="currentColor"
 							>
@@ -59,16 +60,18 @@ export default async function ClassDetailPage({
 									clipRule="evenodd"
 								/>
 							</svg>
-							{lecture.week}주차 강의로 돌아가기
+							<span className="font-medium">
+								{lecture.week}주차 강의로 돌아가기
+							</span>
 						</Link>
 					</div>
-					<h1 className="text-3xl font-bold mb-3 text-primary-color">
+					<h1 className="text-4xl font-bold mb-4 text-white drop-shadow-md">
 						{lecture.week}주차: {lecture.title}
 					</h1>
-					<div className="flex items-center text-text-secondary mb-4">
+					<div className="flex items-center text-white/90 mb-2">
 						<svg
 							xmlns="http://www.w3.org/2000/svg"
-							className="h-5 w-5 mr-1"
+							className="h-5 w-5 mr-2 text-white/80"
 							fill="none"
 							viewBox="0 0 24 24"
 							stroke="currentColor"
@@ -80,14 +83,33 @@ export default async function ClassDetailPage({
 								d="M8 7V3m8 4V3m-9 8h10M5 21h14a2 2 0 002-2V7a2 2 0 00-2-2H5a2 2 0 00-2 2v12a2 2 0 002 2z"
 							/>
 						</svg>
-						<span>{lecture.date}</span>
+						<span className="font-medium">{lecture.date}</span>
+					</div>
+					<div className="mt-4 inline-flex items-center px-4 py-2 bg-white/10 text-white rounded-lg shadow-md backdrop-blur-sm border border-white/20">
+						<svg
+							xmlns="http://www.w3.org/2000/svg"
+							className="h-5 w-5 mr-2"
+							fill="none"
+							viewBox="0 0 24 24"
+							stroke="currentColor"
+						>
+							<path
+								strokeLinecap="round"
+								strokeLinejoin="round"
+								strokeWidth={2}
+								d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z"
+							/>
+						</svg>
+						<span className="font-medium">{classIdNum}교시</span>
 					</div>
 				</div>
 			</section>
 
-			<section className="py-12 -mt-6">
-				<div className="container mx-auto px-4 max-w-4xl">
-					<ClassDetail classData={classData} />
+			<section className="py-12">
+				<div className="container mx-auto px-4 max-w-5xl">
+					<div className="bg-white p-8 rounded-xl shadow-lg border border-gray-200 hover:shadow-xl transition-shadow duration-300">
+						<ClassDetail classData={classData} />
+					</div>
 				</div>
 			</section>
 		</main>
